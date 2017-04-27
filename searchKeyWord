@@ -1,0 +1,19 @@
+FILE *fp_statfile=fopen("x264_output.txt","rb");  
+CString filecontent("");  
+//文件内容读入内存  
+while(!feof(fp_statfile)){  
+    filecontent.AppendChar(getc(fp_statfile));  
+}  
+//查找X264的SSIM数值  
+//X264特征字符串  
+CString featurestr("SSIM Mean Y:");  
+//查找，返回字符串位置  
+int paraloc=filecontent.Find(featurestr);  
+CString parastr;  
+//找到了的话  
+if(paraloc!=-1){  
+    //跳过特征字符串，提取5位  
+    parastr=filecontent.Mid(paraloc+featurestr.GetLength(),5);  
+    TRACE("%s\n",parastr);  
+}  
+fclose(fp_statfile);  
